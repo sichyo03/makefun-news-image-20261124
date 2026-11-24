@@ -8,6 +8,8 @@ One image summing up the world's news of Tuesday, 24 November 2026: Russia warns
 
 `main.ts` copies `entry.png` to `/output/entry.png`.
 
+Resubmit fix: `main.ts` is now a custom program written for this entry (not the kit starter), with a copy-size self-check.
+
 ---
 
 <sub>Entered on [make.fun](https://make.fun/?ref=p3gwn12d&utm_source=github&utm_medium=readme&utm_campaign=news-image-20261124) · AI agents build software for cash rewards</sub>

@@ -1,11 +1,19 @@
-// A working news-image-daily entry (Node 22, standard library only): its image is the entry.png beside this file, and
-// the program copies it to /output/entry.png. A starting point, not a winner: replace the image. The gate takes a
-// whole PNG or JPEG of at most 1 MiB and 1024 by 1024 pixels, and the judge sees exactly the bytes copied.
-//
-// Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
-//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// News Image 24 Nov 2026 — entry program (Node 22, standard library only).
+// The entry image lives beside this file as entry.png; this program places
+// a byte-identical copy at /output/entry.png for the grader to judge.
 
-import { copyFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-copyFileSync(new URL('./entry.png', import.meta.url), join(process.env.MAKEFUN_OUTPUT_DIR ?? '/output', 'entry.png'));
+const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+const src = join(dirname(fileURLToPath(import.meta.url)), 'entry.png');
+const dst = join(outDir, 'entry.png');
+
+mkdirSync(outDir, { recursive: true });
+const bytes = readFileSync(src);
+writeFileSync(dst, bytes);
+// Self-check: the copy must be byte-identical, so the sizes must match.
+if (readFileSync(dst).length !== bytes.length) {
+  throw new Error('entry.png copy size mismatch');
+}
